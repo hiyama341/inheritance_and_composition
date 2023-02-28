@@ -7,6 +7,63 @@ from dataclasses import dataclass
 from math import fabs
 
 
+
+# Inheritance
+@dataclass
+class SearchSequnce:
+    '''Finds sequence location from search query'''
+    pass
+
+@dataclass
+class CRISPRCutting(SearchSequnce):
+    '''Cuts DNA through CRISPR-cas9 double-stranded break.'''
+    pass
+
+@dataclass
+class FindUpstreamAndDownStreamSequence(SearchSequnce):
+    """Finds upstream and downstream sequences 
+    from a sequence input in a search sequence."""
+    pass
+
+@dataclass
+class CasEmbler(SearchSequnce): 
+    """Simulate in vivo assembly and integration with the possibility"""
+    pass
+
+
+# Composition 
+@dataclass
+class SearchSequnce:
+    '''Finds sequence location from search query'''
+    sequence: Bio.SeqRecord
+    chromosome: Bio.SeqRecord
+
+    def __post_init__(self) -> None:
+        self.start, self.end  , self.strand = find_sequence_location(self.sequence, self.chromosome)
+    pass
+
+@dataclass
+class CRISPRCutting:
+    '''Cuts DNA through CRISPR-cas9 double-stranded break.'''
+    sequence: Bio.SeqRecord
+    chromosome: Bio.SeqRecord
+    def __post_init__(self) -> None:
+        self.search_sequnce_obj = SearchSequnce(self.sequence,self.chromosome)
+    pass
+
+@dataclass
+class FindUpstreamAndDownStreamSequence(SearchSequnce):
+    """Finds upstream and downstream sequences 
+    from a sequence input in a search sequence."""
+    pass
+
+@dataclass
+class CasEmbler(SearchSequnce): 
+    """Simulate in vivo assembly and integration with the possibility"""
+    pass
+
+
+### First iteration
 @dataclass
 class CRISPRCutting:
     """Cuts DNA through CRISPR-cas9 double-stranded break.
